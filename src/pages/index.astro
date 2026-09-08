@@ -72,6 +72,18 @@ const features = [
           </article>
           <p class="plans-loading">Cargando planes disponibles…</p>
         </div>
+
+        <template id="plan-card-template">
+          <article class="price-card">
+            <div class="price-label">PLAN PRACTIQ</div>
+            <h3></h3>
+            <div class="price"><strong></strong><span></span></div>
+            <p class="price-note"></p>
+            <ul></ul>
+            <a class="button full" href={appUrl}>Crear cuenta y elegir plan →</a>
+          </article>
+        </template>
+        <template id="plan-feature-template"><li></li></template>
       </section>
 
       <section class="cta"><div class="wrap cta-inner"><div><p class="eyebrow">Tu próxima clase puede empezar distinto</p><h2>Más alumnos atendidos.<br /><em>Menos correcciones repetitivas.</em></h2></div><a class="button button-light" href={appUrl}>Crear cuenta gratis <span>→</span></a></div></section>
@@ -83,22 +95,26 @@ const features = [
       const intervalLabel = (interval) => interval === "year" ? "por año" : "por mes";
       const studentLabel = (count) => count === 1 ? "alumno" : "alumnos";
 
+      // Los nodos se clonan de una plantilla del markup en vez de crearse a
+      // mano: los estilos de Astro son scoped por atributo, y un elemento
+      // creado con createElement no lo lleva — por eso estas tarjetas salían
+      // sin ningún estilo mientras la de al lado, que es markup, se veía bien.
+      const cardTemplate = document.getElementById("plan-card-template");
+      const featureTemplate = document.getElementById("plan-feature-template");
+
       function planCard(plan) {
-        const article = document.createElement("article");
-        article.className = "price-card";
-        const label = document.createElement("div"); label.className = "price-label"; label.textContent = "PLAN PRACTIQ";
-        const title = document.createElement("h3"); title.textContent = plan.name;
-        const price = document.createElement("div"); price.className = "price";
-        const amount = document.createElement("strong"); amount.textContent = formatAmount(plan.amount, plan.currency);
-        const interval = document.createElement("span"); interval.textContent = `${plan.currency || "ARS"} · ${intervalLabel(plan.interval)}`;
-        price.append(amount, interval);
-        const note = document.createElement("p"); note.className = "price-note"; note.textContent = `Hasta ${plan.max_students} ${studentLabel(plan.max_students)} activos.`;
-        const features = document.createElement("ul");
+        const article = cardTemplate.content.firstElementChild.cloneNode(true);
+        article.querySelector("h3").textContent = plan.name;
+        article.querySelector(".price strong").textContent = formatAmount(plan.amount, plan.currency);
+        article.querySelector(".price span").textContent = `${plan.currency || "ARS"} · ${intervalLabel(plan.interval)}`;
+        article.querySelector(".price-note").textContent = `Hasta ${plan.max_students} ${studentLabel(plan.max_students)} activos.`;
+
+        const features = article.querySelector("ul");
         [plan.description || "Prácticas y cuadernos por niveles", "Corrección automática con IA", "Casos pendientes para revisión docente", "Progreso e historial por alumno"].forEach((copy) => {
-          const item = document.createElement("li"); item.textContent = copy; features.append(item);
+          const item = featureTemplate.content.firstElementChild.cloneNode(true);
+          item.textContent = copy;
+          features.append(item);
         });
-        const cta = document.createElement("a"); cta.className = "button full"; cta.href = appUrl; cta.textContent = "Crear cuenta y elegir plan →";
-        article.append(label, title, price, note, features, cta);
         return article;
       }
 
