@@ -1,9 +1,10 @@
 ---
 const appUrl = "https://app.practiq.com.ar";
+const plansApiUrl = `${import.meta.env.PUBLIC_PRACTIQ_API_URL || "https://api.practiq.com.ar"}/api/public/subscription-plans`;
 const features = [
-  ["01", "Creá prácticas", "Armá actividades, consignas y materiales para cada curso en minutos."],
-  ["02", "Acompañá mejor", "Tus alumnos practican a su ritmo y reciben orientación cuando la necesitan."],
-  ["03", "Detectá avances", "Mirá progreso, intentos y temas que necesitan una nueva explicación."],
+  ["01", "Diseñá por niveles", "Creá prácticas y cuadernos de tareas que se adaptan al avance de cada alumno."],
+  ["02", "Dejá que IA corrija", "Practiq corrige ejercicios repetitivos al instante y devuelve orientación para seguir practicando."],
+  ["03", "Intervení donde importa", "Lo que necesita criterio docente llega a vos con contexto. El resto ya está resuelto."],
 ];
 ---
 
@@ -12,8 +13,8 @@ const features = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Practiq ayuda a docentes a crear práctica, acompañar alumnos y ver progreso real." />
-    <title>Practiq — Más práctica. Mejor aprendizaje.</title>
+    <meta name="description" content="Practiq permite enseñar a más alumnos con corrección inteligente y foco docente donde importa." />
+    <title>Practiq — Más alumnos. Misma calidad docente.</title>
   </head>
   <body>
     <main>
@@ -26,11 +27,11 @@ const features = [
 
         <div class="hero-grid wrap">
           <div class="hero-copy">
-            <p class="eyebrow">Hecho para docentes que quieren llegar a cada alumno</p>
-            <h1>Menos tiempo corrigiendo.<br /><em>Más tiempo enseñando.</em></h1>
-            <p class="lead">Practiq convierte tus actividades en práctica guiada, para que cada estudiante avance con claridad y vos veas qué necesita.</p>
+            <p class="eyebrow">Hecho para docentes que quieren crecer sin agotarse</p>
+            <h1>Más alumnos.<br /><em>Misma calidad docente.</em></h1>
+            <p class="lead">Creá tareas por niveles. Practiq corrige lo repetitivo con IA y te deriva sólo los casos donde tu mirada hace diferencia.</p>
             <div class="hero-actions"><a class="button" href="#planes">Probá Practiq gratis <span>→</span></a><a class="text-link" href="#como-funciona">Ver cómo funciona <span>↓</span></a></div>
-            <p class="microcopy">Sin tarjeta. Configuración simple. Pensado para Argentina.</p>
+            <p class="microcopy">Tu criterio sigue al frente. IA se ocupa de la corrección repetitiva.</p>
           </div>
           <div class="product-card" aria-label="Vista previa de progreso de alumnos">
             <div class="window-bar"><span></span><span></span><span></span><b>Mi curso · Matemática 3°</b></div>
@@ -44,28 +45,71 @@ const features = [
             </div>
           </div>
         </div>
-        <div class="trusted wrap"><span>UNA HERRAMIENTA PARA ENSEÑAR MEJOR</span><div class="trusted-rule"></div><span>PRÁCTICA · PROGRESO · ACOMPAÑAMIENTO</span></div>
+        <div class="trusted wrap"><span>UNA HERRAMIENTA PARA ESCALAR TU ENSEÑANZA</span><div class="trusted-rule"></div><span>TAREAS · IA · CRITERIO DOCENTE</span></div>
       </section>
 
       <section class="problem wrap">
         <p class="eyebrow">El problema no es falta de ganas</p>
-        <div class="problem-grid"><h2>Dar clase para todos no debería significar enseñar igual a todos.</h2><p>Cada alumno aprende distinto. Pero entre preparar, corregir y responder consultas, es difícil saber quién entendió y quién quedó atrás. Practiq te da esa visibilidad sin sumar trabajo.</p></div>
+        <div class="problem-grid"><h2>Tu tiempo no debería poner límite a cuántos alumnos podés acompañar.</h2><p>Corregir los mismos ejercicios, una y otra vez, no escala. Practiq automatiza esa primera corrección, organiza prácticas por nivel y deja en tu mesa sólo las respuestas que necesitan una devolución docente.</p></div>
       </section>
 
       <section class="how" id="como-funciona"><div class="wrap"><p class="eyebrow">Una rutina más simple</p><h2>Tu criterio docente.<br /><em>Una plataforma que escala.</em></h2><div class="feature-grid">{features.map(([number, title, copy]) => <article class="feature"><span>{number}</span><div class="feature-icon">{number === "01" ? "✎" : number === "02" ? "↗" : "⌁"}</div><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
 
       <section class="pricing wrap" id="planes">
-        <div class="pricing-copy"><p class="eyebrow">Precio claro, sin sorpresas</p><h2>Empezá con tu curso.<br /><em>Crecé cuando haga falta.</em></h2><p>El plan fundador está pensado para docentes independientes y equipos chicos. Pagás por alumnos activos, no por cuentas vacías.</p></div>
-        <article class="price-card"><div class="price-label">PLAN FUNDADOR</div><h3>Todo lo necesario para empezar</h3><div class="price"><sup>$</sup><strong>2.500</strong><span>ARS<br />por alumno activo / mes</span></div><p class="price-note">Mínimo mensual: $25.000 ARS · Primeros 30 días sin cargo.</p><ul><li>Prácticas y contenidos ilimitados</li><li>Seguimiento de progreso por alumno</li><li>Asistente para crear actividades</li><li>Soporte directo para docentes</li></ul><a class="button full" href={appUrl}>Quiero probar Practiq <span>→</span></a></article>
+        <div class="pricing-copy"><p class="eyebrow">Precio claro, sin sorpresas</p><h2>Empezá con tu curso.<br /><em>Sumá alumnos sin sumar correcciones.</em></h2><p>El plan fundador está pensado para docentes independientes y equipos chicos. Pagás por alumnos activos, no por cuentas vacías.</p></div>
+        <div id="plans-catalog" class="price-grid" aria-live="polite">
+          <p class="plans-loading">Cargando planes disponibles…</p>
+        </div>
       </section>
 
-      <section class="cta"><div class="wrap cta-inner"><div><p class="eyebrow">Tu próxima clase puede empezar distinto</p><h2>Enseñá con evidencia.<br /><em>Acompañá con tiempo.</em></h2></div><a class="button button-light" href={appUrl}>Crear cuenta gratis <span>→</span></a></div></section>
+      <section class="cta"><div class="wrap cta-inner"><div><p class="eyebrow">Tu próxima clase puede empezar distinto</p><h2>Más alumnos atendidos.<br /><em>Menos correcciones repetitivas.</em></h2></div><a class="button button-light" href={appUrl}>Crear cuenta gratis <span>→</span></a></div></section>
     </main>
     <footer class="footer wrap"><a class="brand" href="#inicio"><span class="brand-mark">p</span>practiq</a><p>Herramientas para quienes enseñan.</p><span>© 2026 Practiq</span></footer>
+    <script define:vars={{ plansApiUrl, appUrl }}>
+      const catalog = document.querySelector("#plans-catalog");
+      const formatAmount = (amount, currency) => new Intl.NumberFormat("es-AR", { style: "currency", currency: currency || "ARS", maximumFractionDigits: 0 }).format(Number(amount));
+      const intervalLabel = (interval) => interval === "year" ? "por año" : "por mes";
+      const studentLabel = (count) => count === 1 ? "alumno" : "alumnos";
+
+      function planCard(plan) {
+        const article = document.createElement("article");
+        article.className = "price-card";
+        const label = document.createElement("div"); label.className = "price-label"; label.textContent = "PLAN PRACTIQ";
+        const title = document.createElement("h3"); title.textContent = plan.name;
+        const price = document.createElement("div"); price.className = "price";
+        const amount = document.createElement("strong"); amount.textContent = formatAmount(plan.amount, plan.currency);
+        const interval = document.createElement("span"); interval.textContent = `${plan.currency || "ARS"} · ${intervalLabel(plan.interval)}`;
+        price.append(amount, interval);
+        const note = document.createElement("p"); note.className = "price-note"; note.textContent = `Hasta ${plan.max_students} ${studentLabel(plan.max_students)} activos.`;
+        const features = document.createElement("ul");
+        [plan.description || "Prácticas y cuadernos por niveles", "Corrección automática con IA", "Casos pendientes para revisión docente", "Progreso e historial por alumno"].forEach((copy) => {
+          const item = document.createElement("li"); item.textContent = copy; features.append(item);
+        });
+        const cta = document.createElement("a"); cta.className = "button full"; cta.href = appUrl; cta.textContent = "Crear cuenta y elegir plan →";
+        article.append(label, title, price, note, features, cta);
+        return article;
+      }
+
+      fetch(plansApiUrl)
+        .then((response) => response.ok ? response.json() : Promise.reject(response))
+        .then(({ data }) => {
+          const plans = Array.isArray(data) ? data : [];
+          catalog.replaceChildren();
+          if (!plans.length) {
+            const empty = document.createElement("p"); empty.className = "plans-loading"; empty.textContent = "Próximamente publicaremos los planes disponibles."; catalog.append(empty); return;
+          }
+          plans.forEach((plan) => catalog.append(planCard(plan)));
+        })
+        .catch(() => {
+          catalog.replaceChildren();
+          const fallback = document.createElement("p"); fallback.className = "plans-loading"; fallback.textContent = "No pudimos cargar los planes. Probá de nuevo en unos minutos."; catalog.append(fallback);
+        });
+    </script>
   </body>
 </html>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{--ink:#17213b;--muted:#63708a;--purple:#6d4aff;--lilac:#f2efff;--line:#dedcf0;--green:#a4e6be}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff}.wrap{max-width:1160px;margin:auto;padding-left:24px;padding-right:24px}.hero{min-height:790px;background:radial-gradient(circle at 84% 20%,#e0dcff 0,rgba(224,220,255,.12) 26%,transparent 46%),linear-gradient(125deg,#fbfaff 0%,#f4f2ff 61%,#eeeaff 100%);overflow:hidden}.nav{height:88px;display:flex;align-items:center;justify-content:space-between}.brand{color:var(--ink);text-decoration:none;font-size:24px;font-weight:700;letter-spacing:-1.5px;display:flex;align-items:center;gap:7px}.brand-mark{background:var(--purple);color:#fff;width:27px;height:27px;border-radius:8px;font-family:Fraunces,serif;font-size:23px;line-height:28px;text-align:center;transform:rotate(-7deg)}.nav-links{display:flex;gap:30px;margin-left:auto;margin-right:30px}.nav-links a,.text-link{color:#4c5871;text-decoration:none;font-size:14px;font-weight:600}.button{display:inline-flex;gap:12px;align-items:center;justify-content:center;background:var(--purple);border-radius:9px;padding:16px 21px;color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 9px 22px rgba(91,65,212,.2);transition:transform .2s,background .2s}.button:hover{background:#5633e9;transform:translateY(-2px)}.button span{font-size:20px;line-height:14px}.button-small{padding:11px 17px;font-size:14px}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:64px;align-items:center;padding-top:84px}.eyebrow{font:500 11px 'DM Mono',monospace;color:#6956b2;letter-spacing:1.2px;margin:0 0 20px;text-transform:uppercase}.hero h1,h2{font-size:59px;line-height:1.04;letter-spacing:-3.4px;margin:0;font-weight:700}.hero h1 em,h2 em{font-family:Fraunces,serif;font-weight:600;color:#6542ec}.lead{font-size:18px;line-height:1.58;color:var(--muted);max-width:540px;margin:27px 0}.hero-actions{display:flex;gap:25px;align-items:center}.text-link{display:flex;gap:9px;align-items:center}.microcopy{margin-top:18px;font-size:12px;color:#8992a5}.product-card{background:#fff;border:7px solid rgba(255,255,255,.82);border-radius:20px;box-shadow:0 26px 70px rgba(74,57,133,.18);overflow:hidden;transform:rotate(2.5deg);min-width:0}.window-bar{height:46px;border-bottom:1px solid #edf0f4;display:flex;align-items:center;padding:0 14px;gap:5px;color:#6f7890;font-size:11px}.window-bar span{width:7px;height:7px;border-radius:50%;background:#f3c9cb}.window-bar span:nth-child(2){background:#f7dca4}.window-bar span:nth-child(3){background:#a8e0ba}.window-bar b{margin-left:10px}.app-body{display:flex;min-height:359px}.mini-sidebar{width:57px;background:#f9f9fc;padding:28px 17px}.mini-sidebar i{display:block;height:15px;margin-bottom:24px;background:#ddd8f8;border-radius:4px}.dashboard{padding:25px;flex:1}.dashboard-greeting{font-size:15px;font-weight:700;margin:0 0 20px}.dashboard-greeting span{color:#7757f8}.stats{display:grid;grid-template-columns:1fr 1fr;gap:11px}.stats>div{border:1px solid #e9eaf1;border-radius:9px;padding:12px}.stats small,.student small{display:block;color:#8a92a4;font:9px 'DM Mono',monospace}.stats strong{font-size:25px;display:inline-block;margin:7px 8px 0 0}.stats b{font-size:10px}.up{color:#33a36b}.purple{color:#7055e9}.activity{margin-top:20px}.activity-head{display:flex;justify-content:space-between;font-size:12px;margin-bottom:9px}.activity-head a{color:#6c50e7;text-decoration:none;font-size:10px}.student{display:flex;align-items:center;border-top:1px solid #eff0f4;padding:9px 0;gap:8px;font-size:10px}.student>div{flex:1}.student strong{font-size:10px;color:#36a26d}.student .needs{color:#7055e9}.avatar{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:700}.a1{background:#ffddd1;color:#d45532}.a2{background:#d7e7ff;color:#3970b6}.a3{background:#e7d9ff;color:#7c49c9}.trusted{display:flex;align-items:center;gap:20px;color:#8a86a6;font:10px 'DM Mono',monospace;letter-spacing:.7px;margin-top:93px}.trusted-rule{height:1px;background:#d9d4ee;flex:1}.problem{padding-top:140px;padding-bottom:139px}.problem-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:80px;align-items:end}.problem h2,.how h2,.pricing h2,.cta h2{font-size:43px;letter-spacing:-2.6px}.problem-grid p,.pricing-copy>p:not(.eyebrow){font-size:17px;color:var(--muted);line-height:1.65;margin:0}.how{padding:110px 0 118px;background:#18223d;color:#fff}.how .eyebrow,.cta .eyebrow{color:#bdb3ff}.how h2{color:#fff}.how h2 em,.cta h2 em{color:#bdb3ff}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:57px}.feature{border-top:1px solid #43506d;padding-top:17px;position:relative}.feature>span{color:#9b91c3;font:11px 'DM Mono',monospace}.feature-icon{font-size:29px;color:#ae9dff;margin:36px 0 18px;height:33px}.feature h3{font-size:19px;margin:0 0 10px}.feature p{color:#b8c0d1;font-size:15px;line-height:1.55;margin:0;max-width:275px}.pricing{display:grid;grid-template-columns:.86fr 1fr;gap:100px;align-items:center;padding-top:130px;padding-bottom:130px}.pricing-copy>p:not(.eyebrow){margin-top:23px}.price-card{background:#f4f2ff;border:1px solid #e2ddff;border-radius:17px;padding:31px 35px 34px;box-shadow:0 15px 36px rgba(83,63,171,.09)}.price-label{font:500 10px 'DM Mono',monospace;color:#6956b2;letter-spacing:1px}.price-card h3{font-size:21px;margin:13px 0 20px}.price{display:flex;align-items:center;color:var(--purple)}.price sup{font-size:24px;font-weight:600;align-self:flex-start;margin-top:11px}.price strong{font-size:57px;letter-spacing:-3px;line-height:1}.price span{font:11px/1.4 'DM Mono',monospace;margin-left:11px;color:#65708b}.price-note{font-size:12px;color:#778096;margin:12px 0 22px}.price-card ul{border-top:1px solid #ded9f5;padding:19px 0 10px;margin:0 0 10px;list-style:none}.price-card li{font-size:14px;margin:11px 0;color:#33405a}.price-card li:before{content:'✓';color:#6746ee;font-weight:700;margin-right:11px}.full{width:100%}.cta{background:linear-gradient(115deg,#6444e8,#845ef2);color:#fff;padding:78px 0}.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}.cta h2{color:#fff}.button-light{background:#fff;color:#5332dc;white-space:nowrap;box-shadow:none}.button-light:hover{background:#f3f0ff}.footer{height:105px;display:flex;align-items:center;gap:24px;color:#8490a4;font-size:13px}.footer p{margin-right:auto}.footer span{font-size:12px}@media(max-width:800px){.nav-links{display:none}.hero{min-height:0}.hero-grid,.problem-grid,.pricing{grid-template-columns:1fr;gap:42px}.hero-grid{padding-top:56px}.hero h1,h2{font-size:43px;letter-spacing:-2.5px}.product-card{transform:none;margin:0 8px}.trusted{margin-top:65px;padding-bottom:40px}.trusted span:last-child{display:none}.problem{padding-top:80px;padding-bottom:80px}.problem h2,.how h2,.pricing h2,.cta h2{font-size:35px}.how{padding:78px 0}.feature-grid{grid-template-columns:1fr;gap:43px;margin-top:42px}.pricing{padding-top:80px;padding-bottom:80px}.cta{padding:65px 0}.cta-inner{align-items:flex-start;flex-direction:column}.footer{height:auto;padding-top:30px;padding-bottom:30px;flex-wrap:wrap}.footer p{width:100%;order:3}.footer span{margin-left:auto}}@media(max-width:430px){.hero-actions{align-items:flex-start;flex-direction:column;gap:18px}.hero h1{font-size:38px}.dashboard{padding:18px 12px}.mini-sidebar{display:none}.price-card{padding:27px 21px}.price strong{font-size:49px}}
+  .price-grid{display:grid;gap:16px}.plans-loading{margin:0;padding:30px;color:#63708a;background:#f4f2ff;border:1px solid #e2ddff;border-radius:17px}.price-grid .price strong{font-size:42px;letter-spacing:-2.3px}
 </style>
