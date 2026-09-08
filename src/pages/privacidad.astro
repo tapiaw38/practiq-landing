@@ -1,0 +1,39 @@
+---
+const appUrl = "https://app.practiq.com.ar";
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacidad — Practiq</title>
+  </head>
+  <body>
+    <main class="wrap legal">
+      <a class="back" href="/">← Volver</a>
+      <h1>Privacidad</h1>
+      <p class="draft">Borrador — pendiente de revisión legal antes de publicarse.</p>
+
+      <p>Practiq guarda los datos necesarios para que la plataforma funcione: nombre y email de cuenta (a través de nuestro proveedor de identidad), y la actividad de tus alumnos dentro de tus cursos (prácticas, respuestas, progreso).</p>
+      <p>Esa información se usa únicamente para dar seguimiento al progreso de cada alumno dentro de tu curso y para que vos, como docente, puedas revisar y corregir su trabajo. No se vende ni se comparte con terceros para fines publicitarios.</p>
+      <p>Podés pedir la eliminación de tu cuenta y sus datos escribiendo a <a href="mailto:hola@practiq.com.ar">hola@practiq.com.ar</a>.</p>
+
+      <a class="button" href={appUrl}>Ir a Practiq →</a>
+    </main>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap');
+  :root{--ink:#16203a;--muted:#63708a;--purple:#6545ed;--purple-dark:#4f31d5;--line:#dedcf0}
+  *{box-sizing:border-box}body{margin:0;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff}
+  .wrap{max-width:720px;margin:auto;padding:0 24px}
+  .legal{padding:70px 24px 100px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}.back:hover{color:var(--purple-dark)}
+  h1{font-size:38px;letter-spacing:-1.6px;margin:28px 0 6px}
+  .draft{display:inline-block;font-size:12px;font-weight:700;color:#a15b00;background:#fff2da;border:1px solid #f0d9a8;border-radius:8px;padding:6px 12px;margin-bottom:28px}
+  p{font-size:15.5px;line-height:1.7;color:var(--muted);max-width:60ch}
+  a{color:var(--purple-dark)}
+  .button{display:inline-flex;margin-top:24px;background:linear-gradient(135deg,#7455f5,var(--purple-dark));border-radius:10px;padding:14px 20px;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+</style>
