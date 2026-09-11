@@ -1,5 +1,6 @@
 ---
 const appUrl = "https://app.practiq.com.ar";
+const contactUrl = `${import.meta.env.PUBLIC_PRACTIQ_API_URL || "https://api.practiq.com.ar"}/api/public/site-contact`;
 ---
 
 <!doctype html>
@@ -17,10 +18,24 @@ const appUrl = "https://app.practiq.com.ar";
 
       <p>Practiq guarda los datos necesarios para que la plataforma funcione: nombre y email de cuenta (a través de nuestro proveedor de identidad), y la actividad de tus alumnos dentro de tus cursos (prácticas, respuestas, progreso).</p>
       <p>Esa información se usa únicamente para dar seguimiento al progreso de cada alumno dentro de tu curso y para que vos, como docente, puedas revisar y corregir su trabajo. No se vende ni se comparte con terceros para fines publicitarios.</p>
-      <p>Podés pedir la eliminación de tu cuenta y sus datos escribiendo a <a href="mailto:hola@practiq.com.ar">hola@practiq.com.ar</a>.</p>
+      <p id="privacy-contact" hidden>Podés pedir la eliminación de tu cuenta y sus datos escribiendo a <a id="privacy-contact-email" href="#"></a>.</p>
 
       <a class="button" href={appUrl}>Ir a Practiq →</a>
     </main>
+    <script define:vars={{ contactUrl }}>
+      fetch(contactUrl)
+        .then((response) => response.ok ? response.json() : Promise.reject(response))
+        .then(({ data }) => {
+          const email = typeof data?.email === "string" ? data.email.trim() : "";
+          const contact = document.getElementById("privacy-contact");
+          const link = document.getElementById("privacy-contact-email");
+          if (!email || !contact || !link) return;
+          link.href = `mailto:${email}`;
+          link.textContent = email;
+          contact.hidden = false;
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>
 

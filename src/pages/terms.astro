@@ -1,5 +1,6 @@
 ---
 const appUrl = "https://app.practiq.com.ar";
+const contactUrl = `${import.meta.env.PUBLIC_PRACTIQ_API_URL || "https://api.practiq.com.ar"}/api/public/site-contact`;
 ---
 
 <!doctype html>
@@ -18,10 +19,24 @@ const appUrl = "https://app.practiq.com.ar";
       <p>Practiq es una herramienta para docentes: creación de prácticas, corrección automática de ejercicios y seguimiento del progreso de tus alumnos.</p>
       <p>El plan gratis incluye un alumno activo durante 30 días, sin tarjeta. Los planes pagos se cobran por mes o año según lo elegido, y podés pausar o cancelar tu suscripción en cualquier momento desde tu panel — no hay permanencia mínima.</p>
       <p>Sos responsable de la información que cargás sobre tus alumnos y de contar con la autorización correspondiente para usarla en la plataforma.</p>
-      <p>Consultas sobre estos términos: <a href="mailto:hola@practiq.com.ar">hola@practiq.com.ar</a>.</p>
+      <p id="terms-contact" hidden>Consultas sobre estos términos: <a id="terms-contact-email" href="#"></a>.</p>
 
       <a class="button" href={appUrl}>Ir a Practiq →</a>
     </main>
+    <script define:vars={{ contactUrl }}>
+      fetch(contactUrl)
+        .then((response) => response.ok ? response.json() : Promise.reject(response))
+        .then(({ data }) => {
+          const email = typeof data?.email === "string" ? data.email.trim() : "";
+          const contact = document.getElementById("terms-contact");
+          const link = document.getElementById("terms-contact-email");
+          if (!email || !contact || !link) return;
+          link.href = `mailto:${email}`;
+          link.textContent = email;
+          contact.hidden = false;
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>
 
