@@ -97,6 +97,10 @@ const features = [
               <li>Implementación acompañada</li>
             </ul>
             <a id="institution-whatsapp" class="button full" href="#planes" aria-disabled="true" target="_blank" rel="noreferrer" hidden>Hablar por WhatsApp →</a>
+            <p id="institution-contact" class="institution-contact" hidden>
+              <a id="institution-phone" href="#" hidden></a>
+              <a id="institution-email" href="#" hidden></a>
+            </p>
           </article>
         </div>
 
@@ -211,11 +215,31 @@ const features = [
       fetch(contactUrl).then((response) => response.ok ? response.json() : Promise.reject(response)).then(({ data }) => {
         const whatsapp = document.getElementById("institution-whatsapp");
         const email = document.getElementById("footer-email");
+        const institutionContact = document.getElementById("institution-contact");
+        const phone = document.getElementById("institution-phone");
+        const institutionEmail = document.getElementById("institution-email");
         const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
 
         if (email && hasValue(data?.email)) {
           email.href = `mailto:${data.email.trim()}`;
           email.hidden = false;
+        }
+
+        if (phone && hasValue(data?.phone)) {
+          const phoneNumber = data.phone.replace(/[^+\d]/g, "");
+          if (phoneNumber) {
+            phone.href = `tel:${phoneNumber}`;
+            phone.textContent = data.phone.trim();
+            phone.hidden = false;
+            institutionContact.hidden = false;
+          }
+        }
+
+        if (institutionEmail && hasValue(data?.email)) {
+          institutionEmail.href = `mailto:${data.email.trim()}?subject=Plan%20para%20instituci%C3%B3n`;
+          institutionEmail.textContent = data.email.trim();
+          institutionEmail.hidden = false;
+          institutionContact.hidden = false;
         }
 
         if (!whatsapp || !hasValue(data?.whatsapp)) return;
