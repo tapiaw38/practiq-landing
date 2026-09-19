@@ -44,7 +44,7 @@ const features = [
             <p class="eyebrow">Para escuelas y academias que quieren escalar sin perder calidad</p>
             <h1>Escalá tu matrícula.<br /><em>No tu plantilla.</em></h1>
             <p class="lead">Sumá más alumnos matriculados sin sumar docentes, horas ni infraestructura: Practiq corrige lo verificable, organiza la práctica por nivel y libera a tu equipo para atender más alumnos con la misma plantilla.</p>
-            <div class="hero-actions"><a class="button" href="#institution-plan">Agendá una demo <span>→</span></a><a class="text-link" href="#como-funciona">Ver cómo funciona <span>↓</span></a></div>
+            <div class="hero-actions"><a class="button demo-link" href="#institution-plan">Agendá una demo <span>→</span></a><a class="text-link" href="#como-funciona">Ver cómo funciona <span>↓</span></a></div>
             <p class="microcopy">Tu equipo docente mantiene el criterio. IA se ocupa de la corrección repetitiva.</p>
           </div>
           <div class="product-card" aria-label="Vista previa de progreso de alumnos">
@@ -68,7 +68,7 @@ const features = [
             <p class="eyebrow">Practiq Campus · Exclusivo del plan de facturación directa</p>
             <h2>Una plataforma para toda tu escuela.<br /><em>Un lugar para cada persona.</em></h2>
             <p>Si coordinás una escuela, academia o instituto, Campus reúne la operación diaria en un espacio propio: vos administrás la institución, tus docentes crean y acompañan, y cada alumno accede a sus cursos.</p>
-            <a class="button button-campus" href="#institution-plan">Agendá una demo <span>→</span></a>
+            <a class="button button-campus demo-link" href="#institution-plan">Agendá una demo <span>→</span></a>
           </div>
           <img class="campus-illustration" src="/img/campus-illustration.png" alt="Panel de administración de Practiq Campus mostrando cursos, docentes y alumnos" width="768" height="512" loading="lazy" />
         </div>
@@ -96,7 +96,7 @@ const features = [
           <article><img class="ig-icon" src="/icons/panel-admin.png" alt="" width="34" height="34" loading="lazy" /><div><strong>Administración centralizada</strong><p>Un panel institucional para dar de alta docentes, alumnos y cursos, con Campus incluido.</p></div></article>
           <article><img class="ig-icon" src="/icons/implementacion.png" alt="" width="34" height="34" loading="lazy" /><div><strong>Implementación acompañada</strong><p>Te ayudamos a poner Practiq en marcha en tu institución, no quedás sola con la puesta a punto.</p></div></article>
         </div>
-        <a class="button button-campus" href="#institution-plan">Agendá una demo <span>→</span></a>
+        <a class="button button-campus demo-link" href="#institution-plan">Agendá una demo <span>→</span></a>
       </section>
 
       <section class="problem wrap">
@@ -210,7 +210,7 @@ const features = [
         </div>
       </section>
 
-      <section class="cta"><div class="wrap cta-inner"><div><p class="eyebrow">Tu institución puede empezar distinto</p><h2>Más alumnos atendidos.<br /><em>Menos correcciones repetitivas.</em></h2></div><a class="button button-light" href="#institution-plan">Agendá una demo <span>→</span></a></div></section>
+      <section class="cta"><div class="wrap cta-inner"><div><p class="eyebrow">Tu institución puede empezar distinto</p><h2>Más alumnos atendidos.<br /><em>Menos correcciones repetitivas.</em></h2></div><a class="button button-light demo-link" href="#institution-plan">Agendá una demo <span>→</span></a></div></section>
     </main>
     <footer class="footer wrap">
       <a class="brand" href="#inicio"><img src="/logo.png" class="brand-mark" alt="" width="27" height="27" />practiq</a>
@@ -321,6 +321,11 @@ const features = [
           whatsapp.href = contact.toString();
           whatsapp.removeAttribute("aria-disabled");
           whatsapp.hidden = false;
+          document.querySelectorAll(".demo-link").forEach((link) => {
+            link.href = contact.toString();
+            link.target = "_blank";
+            link.rel = "noreferrer";
+          });
         } catch {
           // An invalid configuration is treated as no contact method.
         }
@@ -355,4 +360,6 @@ const features = [
   @media(max-width:800px){.wrap{padding-left:32px;padding-right:32px}.nav-links{display:flex;flex-wrap:nowrap;justify-content:center;gap:4px;width:100%;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-links a{flex-shrink:0}.product-card{display:none}.hero .eyebrow,.hero h1{text-align:center}.microcopy{display:none}.hero-actions{align-items:stretch;flex-direction:column;gap:20px}.hero-actions .button{width:100%}.hero-actions .button span{display:none}.hero-actions .text-link{width:100%;flex-direction:column;justify-content:center;gap:5px}.hero-actions .text-link span{font-size:18px;line-height:1}}
   /* Practiq roles: Lexend for reading; Nunito for hierarchy and actions. */
   h1,h2,h3,h4,h5,h6,.brand,.button,.nav-links a,.text-link,.eyebrow,.feature>span,.level-steps li>span,.price-label,.price span,.stats small,.student small,.trusted{font-family:'Nunito',sans-serif}.hero h1 em,h2 em{font-family:'Nunito',sans-serif;font-style:italic;font-weight:800}.eyebrow,.feature>span,.level-steps li>span,.price-label,.price span,.stats small,.student small,.trusted{font-weight:800}
+  /* Mobile keeps product proof visible without recreating the desktop hero. */
+  @media(max-width:800px){.wrap{padding-left:20px;padding-right:20px}.product-card{display:block;max-width:390px;margin:4px auto 0;transform:none}.product-card:hover{transform:none}.product-card .app-body{min-height:286px}.product-card .dashboard{padding:18px}.product-card .mini-sidebar{display:none}.product-card .trusted{display:none}.hero-grid{gap:34px}.hero-actions{gap:14px}.hero-actions .text-link{font-size:14px}}
 </style>
