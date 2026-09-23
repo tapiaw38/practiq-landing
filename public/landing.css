@@ -499,7 +499,7 @@ h2 { font-size: 2rem; }
 .level-steps h3 { margin: 0 0 6px; font-size: 1rem; }
 .level-steps p { margin: 0; color: var(--text-muted); font-size: .8rem; line-height: var(--leading-normal); }
 
-/* Practi */
+/* Quanty */
 .mascot {
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
