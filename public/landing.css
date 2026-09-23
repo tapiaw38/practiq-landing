@@ -502,14 +502,14 @@ h2 { font-size: 2rem; }
 /* Quanty */
 .mascot {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 18px;
   align-items: center;
   margin-block: 24px;
   padding: 24px 0;
 }
 
-.mascot-img { display: block; width: 112px; max-width: 112px; height: auto; justify-self: center; filter: var(--shadow-mascot); }
+.mascot-img { display: block; width: 172px; max-width: 100%; height: auto; justify-self: center; filter: var(--shadow-mascot); }
 .mascot-copy h2 { font-size: 1.75rem; }
 .mascot .lead { margin: 10px 0 0; font-size: .84rem; }
 .mascot-copy { min-width: 0; }
